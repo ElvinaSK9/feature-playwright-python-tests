@@ -1,0 +1,39 @@
+# Playwright Login Automation Tests
+
+This project contains automated UI tests for the login page on the Expand Testing practice website.
+
+The tests are written in Python using Playwright and Pytest.
+
+## Test coverage
+
+The project covers the main login scenarios:
+
+- successful login with valid credentials
+- login by pressing the Enter key
+- keyboard navigation using Tab
+- successful login after a failed attempt
+- invalid username
+- invalid password
+- empty credentials
+- empty username or password
+- whitespace-only values
+- credentials with incorrect letter case
+- username with leading and trailing spaces
+- long username
+- username with special characters
+
+Negative scenarios are implemented using `pytest.mark.parametrize` to avoid duplicated test code.
+
+## Project approach
+
+- A session-scoped fixture starts the browser once for the test session.
+- A new browser page is created for every test to keep tests isolated.
+- Repeated login actions are moved to a reusable helper function.
+- Playwright assertions are used to verify URLs, messages, element visibility, and keyboard focus.
+- Tests run in Chromium in headless mode.
+
+## Installation
+
+```bash
+pip install pytest playwright pytest-html
+playwright install chromium
