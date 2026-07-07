@@ -1,10 +1,10 @@
 # Playwright Login Automation Tests
 
-This project contains automated UI tests for the login page on the Expand Testing practice website.
+This project contains automated UI tests for the login page and form on the Expand Testing practice website.
 
 The tests are written in Python using Playwright and Pytest.
 
-## Test coverage
+## Test coverage for Login
 
 The project covers the main login scenarios:
 
@@ -37,3 +37,6 @@ Negative scenarios are implemented using `pytest.mark.parametrize` to avoid dupl
 ```bash
 pip install pytest playwright pytest-html
 playwright install chromium
+
+
+Test coverage for Form in progress

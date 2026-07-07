@@ -14,42 +14,42 @@ def browser():
         browser.close()
 
 @pytest.fixture(scope="function")
-def page(browser):
-    page = browser.new_page()
-    page.goto(BASE_URL)
-    yield page
-    page.close()
+def login_page(browser):
+    login_page = browser.new_page()
+    login_page.goto(BASE_URL)
+    yield login_page
+    login_page.close()
 
-def login(username,password,page:Page):
-    input_username = page.get_by_label("username")
-    input_password = page.get_by_label("password")
+def login(username,password,login_page:Page):
+    input_username = login_page.get_by_label("username")
+    input_password = login_page.get_by_label("password")
     input_username.fill(username)
     input_password.fill(password)
-    login_btn = page.get_by_role('button', name='Login')
+    login_btn = login_page.get_by_role('button', name='Login')
     login_btn.click()
 
-def test_successful_login(page:Page):
+def test_successful_login(login_page:Page):
     username="practice"
     password ="SuperSecretPassword!"
-    login(username,password,page)
+    login(username,password,login_page)
 
-    expect(page).to_have_url("https://practice.expandtesting.com/secure")
-    expect(page.get_by_text("You logged into a secure area!")).to_be_visible()
-    expect(page.get_by_role('link', name = 'Logout')).to_be_visible()
+    expect(login_page).to_have_url("https://practice.expandtesting.com/secure")
+    expect(login_page.get_by_text("You logged into a secure area!")).to_be_visible()
+    expect(login_page.get_by_role('link', name = 'Logout')).to_be_visible()
 
-def test_login_using_enter_key(page:Page):
-    input_username = page.get_by_label("username")
-    input_password = page.get_by_label("password")
+def test_login_using_enter_key(login_page:Page):
+    input_username = login_page.get_by_label("username")
+    input_password = login_page.get_by_label("password")
     input_username.fill(USERNAME)
     input_password.fill(PASSWORD)
     input_password.press("Enter")
 
-    expect(page).to_have_url("https://practice.expandtesting.com/secure")
-    expect(page.get_by_text("You logged into a secure area!")).to_be_visible()
+    expect(login_page).to_have_url("https://practice.expandtesting.com/secure")
+    expect(login_page.get_by_text("You logged into a secure area!")).to_be_visible()
 
-def test_tab_navigation_order(page:Page):
-    input_username= page.get_by_label("username")
-    input_password = page.get_by_label("password")
+def test_tab_navigation_order(login_page:Page):
+    input_username= login_page.get_by_label("username")
+    input_password = login_page.get_by_label("password")
     input_username.focus()
 
     expect(input_username).to_be_focused()
@@ -60,20 +60,20 @@ def test_tab_navigation_order(page:Page):
 
     input_password.press("Tab")
 
-    expect(page.get_by_role('button', name='Login')).to_be_focused()
+    expect(login_page.get_by_role('button', name='Login')).to_be_focused()
 
-def test_successful_login_after_failed_attempt(page:Page):
+def test_successful_login_after_failed_attempt(login_page:Page):
     username="practice_test"
     password ="SuperSecretPassword!"
-    login(username,password,page)
+    login(username,password,login_page)
 
-    expect(page).to_have_url("https://practice.expandtesting.com/login")
-    expect(page.get_by_text("Your username is invalid!")).to_be_visible()
+    expect(login_page).to_have_url("https://practice.expandtesting.com/login")
+    expect(login_page.get_by_text("Your username is invalid!")).to_be_visible()
 
-    login(USERNAME,PASSWORD,page)
+    login(USERNAME,PASSWORD,login_page)
 
-    expect(page).to_have_url("https://practice.expandtesting.com/secure")
-    expect(page.get_by_text("You logged into a secure area!")).to_be_visible()
+    expect(login_page).to_have_url("https://practice.expandtesting.com/secure")
+    expect(login_page.get_by_text("You logged into a secure area!")).to_be_visible()
 
 
 @pytest.mark.parametrize(
@@ -117,8 +117,8 @@ def test_successful_login_after_failed_attempt(page:Page):
         ),
     ]
 )
-def test_negative_scenarios(username,password,expected_message,page:Page):
-    login(username,password,page)
-    expect(page.get_by_text(expected_message)).to_be_visible()
-    expect(page).to_have_url("https://practice.expandtesting.com/login")
+def test_negative_scenarios(username,password,expected_message,login_page:Page):
+    login(username,password,login_page)
+    expect(login_page.get_by_text(expected_message)).to_be_visible()
+    expect(login_page).to_have_url("https://practice.expandtesting.com/login")
 

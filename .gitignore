@@ -3,6 +3,6 @@ __pycache__/
 .pytest_cache/
 .idea/
 *.pyc
-Reports/
+reports/
 reports/
 .DS_Store
