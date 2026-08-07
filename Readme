@@ -1,6 +1,11 @@
 # Playwright Login Automation Tests
 
-This project contains automated UI tests for the login page and form on the Expand Testing practice website.
+The project currently includes tests for:
+
+- login scenarios on the Expand Testing practice website
+- input field scenarios on QA Playground
+
+More test suites will be added gradually as new practice pages are covered.
 
 The tests are written in Python using Playwright and Pytest.
 
@@ -32,14 +37,33 @@ Negative scenarios are implemented using `pytest.mark.parametrize` to avoid dupl
 - Playwright assertions are used to verify URLs, messages, element visibility, and keyboard focus.
 - Tests run in Chromium in headless mode.
 
+## Test coverage for QA Playground Input Fields
+
+The project also includes automated tests for the QA Playground Input Fields page:
+
+https://qaplayground.com/practice/input-fields
+
+Current and planned coverage includes:
+
+- typing text into an input field
+- submitting the typed value
+- checking that the result matches the entered value
+- appending text to an existing value
+- reading a predefined input value
+- clearing an input field
+- checking disabled input behavior
+- checking readonly input behavior
+
+Additional tests for this page and other QA Playground practice sections will be added later.
 ## Installation
 
 ```bash
 pip install pytest playwright pytest-html
 playwright install chromium
 
+## Run tests
 
-## RUN
+Run login tests:
+```bash
 pytest tests/test_expandtesting_login.py --html=reports/test_expandtesting_login.html
-
-
+pytest tests/test_qaplayground_input_field.py --html=reports/test_qaplayground_input_field.html
