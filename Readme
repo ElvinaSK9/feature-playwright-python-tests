@@ -40,17 +40,6 @@ playwright install chromium
 
 
 ## RUN
-pytest tests/test_qaplayground_forms.py --html=reports/qaplayground_forms_report.html
 pytest tests/test_expandtesting_login.py --html=reports/test_expandtesting_login.html
 
 
-Test coverage for Form in progress
-_FORM_:
-## What is covered now
-
-- Form page opens successfully
-- Main form elements are visible
-- Required fields are visible
-- User can submit the form with valid data
-- Required field errors are shown after empty submit
-- Entered data is not cleared after validation error
