@@ -1,0 +1,16 @@
+import pytest
+from playwright.sync_api import Browser, Page, sync_playwright
+
+@pytest.fixture(scope="session")
+def browser() -> Browser:
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch(headless=True)
+        yield browser
+        browser.close()
+
+
+@pytest.fixture(scope="function")
+def page(browser: Browser) -> Page:
+    page = browser.new_page()
+    yield page
+    page.close()
