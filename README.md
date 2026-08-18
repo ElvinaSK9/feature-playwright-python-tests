@@ -18,7 +18,6 @@ UI automation project built with Python, Playwright, and Pytest.
 
 ## Structure
 
-```text
 Playwright-Python/
 ├── docs/
 │   ├── main.md
