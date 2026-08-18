@@ -1,0 +1,69 @@
+# Playwright UI Automation Tests
+
+UI automation project built with Python, Playwright, and Pytest.
+
+## Coverage
+
+* ExpandTesting: login scenarios
+* QA Playground: input fields
+* QA Playground: data table
+
+## Tech Stack
+
+* Python
+* Playwright
+* Pytest
+* Allure
+* Page Object Model
+
+## Structure
+
+```text
+Playwright-Python/
+├── docs/
+│   ├── main.md
+│   └── qaplayground_forms_test_cases.md
+├── pages/
+│   ├── __init__.py
+│   ├── base_page.py
+│   ├── data_table.py
+│   └── input_fields_page.py
+├── reports/
+│   ├── allure-results/
+│   └── allure-report/
+├── tests/
+│   ├── test_data_table.py
+│   ├── test_expandtesting_login.py
+│   └── test_input_field.py
+├── .gitignore
+├── conftest.py
+├── pytest.ini
+└── README.md
+```
+
+## Installation
+
+```bash
+pip install pytest playwright allure-pytest
+playwright install chromium
+```
+
+## Run
+
+Run all tests:
+
+```bash
+pytest
+```
+
+Open Allure report:
+
+```bash
+allure serve reports/allure-results
+```
+
+Run a single test file:
+
+```bash
+pytest tests/test_data_table.py
+```

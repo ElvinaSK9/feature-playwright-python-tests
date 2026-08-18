@@ -1,17 +1,10 @@
 
 import pytest
-from playwright.sync_api import Page, sync_playwright, expect
+from playwright.sync_api import Page, expect
 
 USERNAME = "practice"
 PASSWORD = "SuperSecretPassword!"
 BASE_URL = "https://practice.expandtesting.com/login"
-
-@pytest.fixture(scope="session")
-def browser():
-    with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=True)
-        yield browser
-        browser.close()
 
 @pytest.fixture(scope="function")
 def login_page(browser):

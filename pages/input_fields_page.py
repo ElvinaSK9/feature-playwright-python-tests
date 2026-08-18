@@ -35,9 +35,9 @@ class InputFieldsPage(BasePage):
         self.readonly_input: Locator = page.locator("#readonlyInput")
         self.readonly_result: Locator = page.locator("#result-s06")
 
-    def open(self):
-        """Open the Input Fields practice page."""
-        super().open(self.PATH)
+    # def open(self):
+    #     """Open the Input Fields practice page."""
+    #     super().open(self.PATH)
 
     def type_movie_name(self, movie_name: str):
         """INP001: Type text into the movie name input."""
