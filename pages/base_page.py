@@ -4,5 +4,5 @@ class BasePage:
     def __init__(self, page):
         self.page = page
 
-    def open(self, path):
-        self.page.goto(f"{self.BASE_URL}{path}")
+    def open(self):
+        self.page.goto(f"{self.BASE_URL}{self.PATH}")
