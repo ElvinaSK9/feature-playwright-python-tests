@@ -20,6 +20,15 @@ EXPECTED_HEADERS = [
     "Actions",
 ]
 
+GENRE_LIST = [
+    "All",
+    "Technology",
+    "Fantasy",
+    "Science Fiction",
+    "Dystopian",
+    "Fiction",
+    "Non-Fiction",
+]
 
 @pytest.fixture
 def data_page(page: Page):
@@ -105,6 +114,23 @@ def test_value_in_the_columnISBN(data_page: DataTablePage):
             checked_isbn_count += 1
 
     assert checked_isbn_count == TOTAL_BOOKS
+
+def test_genre_filter(data_page: DataTablePage):
+    """DT_008 — Genre filter reduces visible rows to the selected genre only
+    Expected: Only books in the chosen genre are shown after filtering"""
+    selected_genre = GENRE_LIST[2]
+    data_page.filter_by_genre(selected_genre)
+    genres = data_page.get_book_genres()
+    assert len(genres) > 0
+
+    for genre_value in genres:
+        assert genre_value == selected_genre
+
+def test_attribute(data_page: DataTablePage):
+    """DT010 — Row can be located by its data-book-id attribute
+    Expected: Row with data-book-id='book-004' contains 'The Hobbit'"""
+    expect(data_page.attribute_row_book).to_be_visible()
+    expect(data_page.book_name_from_attribute_row()).to_have_text("The Hobbit")
 
 
 

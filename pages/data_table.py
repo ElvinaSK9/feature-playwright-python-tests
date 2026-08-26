@@ -24,6 +24,12 @@ class DataTablePage(BasePage):
 
         self.isbn_cells: Locator = self.book_row.locator('[data-col="book-isbn"]')
 
+        self.table_wrapper: Locator = page.locator('[data-testid="data-table-wrapper"]')
+        self.genre_filter: Locator = self.table_wrapper.get_by_test_id("genre-filter")
+        self.col_genre: Locator = self.book_row.get_by_test_id("genre-badge")
+
+        self.attribute_row_book: Locator = self.table.locator('tr[data-book-id="book-004"]')
+
     def header_by_name(self, name: str) -> Locator:
         return self.table.get_by_role("columnheader", name=name, exact=True)
 
@@ -44,3 +50,13 @@ class DataTablePage(BasePage):
     def search(self, text: str) -> None:
         self.search_input.fill(text)
 
+    def filter_by_genre(self, genre: str) :
+        self.genre_filter.select_option(genre)
+
+    def get_book_genres(self):
+        genres = self.col_genre.all_text_contents()
+        return genres
+
+    def book_name_from_attribute_row(self) -> Locator:
+        book = self.attribute_row_book.locator('td[data-col="book-name"]')
+        return book
