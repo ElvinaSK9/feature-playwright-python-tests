@@ -9,6 +9,7 @@ TOTAL_PAGES = TOTAL_BOOKS // ROWS
 CLEAN_CODE = "Clean Code"
 GEORGE_ORWELL = "George Orwell"
 BOOK_1984 = "1984"
+TEXT = "1 book"
 
 EXPECTED_HEADERS = [
     "Sr No.",
@@ -132,8 +133,23 @@ def test_attribute(data_page: DataTablePage):
     expect(data_page.attribute_row_book).to_be_visible()
     expect(data_page.book_name_from_attribute_row()).to_have_text("The Hobbit")
 
+def test_clearing(data_page: DataTablePage):
+    """DT011 — Clearing the search input restores all rows and resets pagination
+    Expected: After clearing search, page 1 shows 5 rows and pagination shows 5 pages"""
+    expect(data_page.table_body).to_be_visible()
+    expect(data_page.book_row).to_have_count(ROWS)
 
+    data_page.search("Pattern")
 
+    expect(data_page.search_input).to_have_value("Pattern")
+    expect(data_page.book_row).to_have_count(1)
+    expect(data_page.row_by_text("Design Patterns")).to_be_visible()
+    expect(data_page.row_counts).to_have_text(TEXT)
+    data_page.clear_search()
+    expect(data_page.book_row).to_have_count(ROWS)
+    expect(data_page.row_count).to_have_text(
+        f"{TOTAL_BOOKS} books — page {CURRENT_PAGE} of {TOTAL_PAGES}"
+    )
 
 
 

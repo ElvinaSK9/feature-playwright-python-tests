@@ -19,6 +19,8 @@ class DataTablePage(BasePage):
         self.next_button: Locator = self.pagination.get_by_test_id("pagination-next")
         self.row_count: Locator = self.pagination.get_by_test_id("row-count")
 
+        self.row_counts: Locator = page.get_by_test_id("row-count")
+
         self.edit_dialog: Locator = page.locator('[data-testid="edit-book-dialog"]')
         self.search_input: Locator = page.locator('[data-testid="table-search"]')
 
@@ -29,6 +31,7 @@ class DataTablePage(BasePage):
         self.col_genre: Locator = self.book_row.get_by_test_id("genre-badge")
 
         self.attribute_row_book: Locator = self.table.locator('tr[data-book-id="book-004"]')
+
 
     def header_by_name(self, name: str) -> Locator:
         return self.table.get_by_role("columnheader", name=name, exact=True)
@@ -60,3 +63,12 @@ class DataTablePage(BasePage):
     def book_name_from_attribute_row(self) -> Locator:
         book = self.attribute_row_book.locator('td[data-col="book-name"]')
         return book
+
+    def clear_search(self):
+        self.search_input.clear()
+
+    def get_rows_count(self):
+        return self.book_row.count()
+
+    def get_row_count_text(self):
+        return self.row_counts.text_content()
