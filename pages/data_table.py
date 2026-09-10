@@ -13,6 +13,7 @@ class DataTablePage(BasePage):
 
         self.table_body: Locator = self.table.get_by_test_id("table-body")
         self.book_row: Locator = self.table_body.get_by_test_id("book-row")
+        self.serial_number_cells: Locator = self.book_row.get_by_test_id("cell-sr-no")
 
         self.pagination: Locator = page.get_by_test_id("pagination")
         self.previous_button: Locator = self.pagination.get_by_test_id("pagination-prev")
