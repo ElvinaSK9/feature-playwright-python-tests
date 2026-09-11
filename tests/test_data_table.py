@@ -5,11 +5,13 @@ from pages.data_table import DataTablePage
 ROWS = 5
 TOTAL_BOOKS = 25
 CURRENT_PAGE = 1
+SECOND_PAGE = 2
 TOTAL_PAGES = TOTAL_BOOKS // ROWS
 CLEAN_CODE = "Clean Code"
 GEORGE_ORWELL = "George Orwell"
 BOOK_1984 = "1984"
 TEXT = "1 book"
+PAGE_2_SERIAL_NUMBERS = ["6", "7", "8", "9", "10"]
 
 EXPECTED_HEADERS = [
     "Sr No.",
@@ -155,12 +157,12 @@ def test_clicking_page_2_loads_serial_numbers_6_to_10(data_page: DataTablePage):
     """DT013 — Clicking page 2 loads the next set of rows
    Expected: Page 2 shows rows 6-10 and the active page button is highlighted"""
 
-    data_page.page_button(2).click()
+    data_page.page_button(SECOND_PAGE).click()
 
     expect(data_page.book_row).to_have_count(ROWS)
-    expect(data_page.serial_number_cells).to_have_text(["6", "7", "8", "9", "10"])
-    expect(data_page.page_button(2)).to_have_attribute("aria-current", "page")
-    expect(data_page.row_count).to_have_text(f"{TOTAL_BOOKS} books — page 2 of {TOTAL_PAGES}")
+    expect(data_page.serial_number_cells).to_have_text(PAGE_2_SERIAL_NUMBERS)
+    expect(data_page.page_button(SECOND_PAGE)).to_have_attribute("aria-current", "page")
+    expect(data_page.row_count).to_have_text(f"{TOTAL_BOOKS} books — page {SECOND_PAGE} of {TOTAL_PAGES}")
 
 def test_navigation_one_by_one(data_page: DataTablePage):
     """DT014 - Clicking Next navigates to the following page
@@ -174,8 +176,8 @@ def test_navigation_one_by_one(data_page: DataTablePage):
     data_page.next_button.click()
 
     expect(data_page.previous_button).to_be_enabled()
-    expect(data_page.page_button(2)).to_have_attribute("aria-current", "page")
-    expect(data_page.row_count).to_have_text(f"{TOTAL_BOOKS} books — page 2 of {TOTAL_PAGES}")
+    expect(data_page.page_button(SECOND_PAGE)).to_have_attribute("aria-current", "page")
+    expect(data_page.row_count).to_have_text(f"{TOTAL_BOOKS} books — page {SECOND_PAGE} of {TOTAL_PAGES}")
 
 def test_previous_button_state(data_page: DataTablePage):
     """DT015 - Previous button is disabled on page 1 and enabled on page 2+
@@ -184,8 +186,8 @@ def test_previous_button_state(data_page: DataTablePage):
     expect(data_page.page_button(CURRENT_PAGE)).to_have_attribute("aria-current", "page")
     expect(data_page.previous_button).to_be_disabled()
 
-    data_page.page_button(2).click()
+    data_page.page_button(SECOND_PAGE).click()
 
     expect(data_page.previous_button).to_be_enabled()
     expect(data_page.next_button).to_be_enabled()
-    expect(data_page.page_button(2)).to_have_attribute("aria-current", "page")
+    expect(data_page.page_button(SECOND_PAGE)).to_have_attribute("aria-current", "page")
