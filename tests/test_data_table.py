@@ -161,3 +161,31 @@ def test_clicking_page_2_loads_serial_numbers_6_to_10(data_page: DataTablePage):
     expect(data_page.serial_number_cells).to_have_text(["6", "7", "8", "9", "10"])
     expect(data_page.page_button(2)).to_have_attribute("aria-current", "page")
     expect(data_page.row_count).to_have_text(f"{TOTAL_BOOKS} books — page 2 of {TOTAL_PAGES}")
+
+def test_navigation_one_by_one(data_page: DataTablePage):
+    """DT014 - Clicking Next navigates to the following page
+    Expected: Next button advances pagination by one page"""
+
+    expect(data_page.page_button(CURRENT_PAGE)).to_have_attribute("aria-current", "page")
+    expect(data_page.row_count).to_have_text(
+        f"{TOTAL_BOOKS} books — page {CURRENT_PAGE} of {TOTAL_PAGES}"
+    )
+    expect(data_page.next_button).to_be_enabled()
+    data_page.next_button.click()
+
+    expect(data_page.previous_button).to_be_enabled()
+    expect(data_page.page_button(2)).to_have_attribute("aria-current", "page")
+    expect(data_page.row_count).to_have_text(f"{TOTAL_BOOKS} books — page 2 of {TOTAL_PAGES}")
+
+def test_previous_button_state(data_page: DataTablePage):
+    """DT015 - Previous button is disabled on page 1 and enabled on page 2+
+   Expected: Prev is disabled on first page, enabled on all others"""
+
+    expect(data_page.page_button(CURRENT_PAGE)).to_have_attribute("aria-current", "page")
+    expect(data_page.previous_button).to_be_disabled()
+
+    data_page.page_button(2).click()
+
+    expect(data_page.previous_button).to_be_enabled()
+    expect(data_page.next_button).to_be_enabled()
+    expect(data_page.page_button(2)).to_have_attribute("aria-current", "page")
